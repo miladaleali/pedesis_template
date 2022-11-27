@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+
+    redis:
+        image: redis:alpine
+        ports:
+            - "6379:6379"
+        restart: always
+
+    rabbitmq:
+        image: rabbitmq
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        restart: always
+
+    db:
+        image: postgres:15.1-alpine
+        ports:
+            - "5432:5432"
+        env_file:
+            - .env
+        environment:
+            # - POSTGRES_USER=postgres
+            # - POSTGRES_PASSWORD=postgres
+            # - POSTGRES_DB=postgres
+            - PGDATA=/var/lib/postgresql/data/pgdata
+        volumes:
+            - ./data:/var/lib/postgresql/data/pgdata
+        restart: on-failure
+
+    backend:
+        image: '${DOCKER_IMAGE_BACKEND?Variable not set}'
+        depends_on:
+            - redis
+            - rabbitmq
+            - db
+        env_file:
+            - .env
+        environment:
+            - REDIS_HOST=redis
+            - RABBITMQ_HOST=rabbitmq
+            - POSTGRES_HOST=db
+            # - POSTGRES_USER=postgres
+            # - POSTGRES_PASSWORD=postgres
+            # - POSTGRES_DB=postgres
+        build:
+            context: ./backend
+            dockerfile: backend.dockerfile
+        links:
+            - redis
+            - rabbitmq
+            - db
+        volumes:
+            # - ./backend/app/alembic/versions:/app/alembic/versions
+            - ./backend/app:/app
+        restart: on-failure
+
+    celery:
+        image: '${DOCKER_IMAGE_CELERYWORKER?Variable not set}'
+        depends_on:
+            - redis
+            - rabbitmq
+            - db
+        environment:
+            - REDIS_HOST=redis
+            - RABBITMQ_HOST=rabbitmq
+            - POSTGRES_HOST=db
+            # - POSTGRES_USER=postgres
+            # - POSTGRES_PASSWORD=postgres
+            # - POSTGRES_DB=postgres
+            - C_FORCE_ROOT=true
+        build:
+            context: ./backend
+            dockerfile: celeryworker.dockerfile
+        restart: always
+
+    # flower:
+    #     image: mher/flower
+    #     env_file:
+    #         - .env
+
+volumes:
+    data:
+#       driver: local
