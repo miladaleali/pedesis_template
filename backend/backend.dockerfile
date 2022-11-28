@@ -33,3 +33,5 @@ COPY ./app /app
 # COPY ./pedesis/pedesis /app/pedesis/
 
 ENV PYTHONPATH=/app
+
+CMD bash /station-start.sh
