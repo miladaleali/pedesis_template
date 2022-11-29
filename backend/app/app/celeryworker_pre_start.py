@@ -17,7 +17,7 @@ wait_seconds = 1
 def init() -> None:
     try:
         db = get_db(get_settings().get_default_db_setting(), init_tables=False)
-        with db.session as s:
+        with db.session() as s:
             s.execute("SELECT 1")
     except Exception as e:
         logger.error(e)
