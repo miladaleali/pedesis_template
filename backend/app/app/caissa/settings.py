@@ -12,3 +12,5 @@ class StationSettings(BaseStationSettings):
     installed_data_sources: dict[str, str] = {
         'okx': 'pedesis.components.broker.templates.okx',
     }
+
+settings = StationSettings()

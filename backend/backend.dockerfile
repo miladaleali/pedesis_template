@@ -34,4 +34,8 @@ COPY ./app /app
 
 ENV PYTHONPATH=/app
 
+COPY ./app/station-start.sh /station-start.sh
+
+RUN chmod +x /station-start.sh
+
 CMD bash /station-start.sh
