@@ -48,6 +48,7 @@ services:
         build:
             context: ./backend
             dockerfile: backend.dockerfile
+            target: debug
         links:
             - redis
             - rabbitmq
@@ -55,6 +56,8 @@ services:
         volumes:
             # - ./backend/app/alembic/versions:/app/alembic/versions
             - ./backend/app:/app
+        ports:  
+            - 5678:5678
         restart: on-failure
 
     celery:
@@ -74,6 +77,9 @@ services:
         build:
             context: ./backend
             dockerfile: celeryworker.dockerfile
+            target: debug
+        ports:
+            - 5679:5679
         restart: always
 
     # flower:

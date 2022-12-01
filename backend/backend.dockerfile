@@ -1,4 +1,4 @@
-FROM pedesis_python_env:latest
+FROM pedesis_python_env:latest as base
 
 WORKDIR /app/
 
@@ -10,6 +10,16 @@ COPY ./app /app
 # COPY ./pedesis/pedesis /app/pedesis/
 
 ENV PYTHONPATH=/app
+
+######################## START NEW IMAGE: DEBUGGER ############################
+FROM base as debug
+RUN pip install ptvsd
+
+WORKDIR /app/
+
+CMD python -m ptvsd --host 0.0.0.0 --port 5678 --wait --multiprocess -m manage run station
+######################## START NEW IMAGE: PRODUCTION ##########################
+FROM base as prod
 
 COPY ./app/station-start.sh /station-start.sh
 

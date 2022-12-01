@@ -1,4 +1,4 @@
-FROM pedesis_python_env:latest
+FROM pedesis_python_env:latest as base
 
 WORKDIR /app/
 
@@ -11,6 +11,16 @@ COPY ./app /app
 WORKDIR /app
 
 ENV PYTHONPATH=/app
+
+######################## START NEW IMAGE: DEBUGGER ############################‍
+FROM base as debug
+RUN pip install ptvsd
+
+WORKDIR /app/
+
+CMD python -m ptvsd --host 0.0.0.0 --port 5679 --wait --multiprocess -m manage run celery
+######################## START NEW IMAGE: PRODUCTION ##########################
+FROM base as prod
 
 COPY ./app/worker-start.sh /worker-start.sh
 
