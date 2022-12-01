@@ -48,7 +48,7 @@ services:
         build:
             context: ./backend
             dockerfile: backend.dockerfile
-            target: debug
+            target: prod
         links:
             - redis
             - rabbitmq
@@ -66,6 +66,12 @@ services:
             - redis
             - rabbitmq
             - db
+        links:
+            - redis
+            - rabbitmq
+            - db
+        env_file:
+            - .env
         environment:
             - REDIS_HOST=redis
             - RABBITMQ_HOST=rabbitmq
@@ -77,7 +83,7 @@ services:
         build:
             context: ./backend
             dockerfile: celeryworker.dockerfile
-            target: debug
+            target: prod
         ports:
             - 5679:5679
         restart: always
