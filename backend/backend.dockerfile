@@ -1,4 +1,4 @@
-FROM pedesis_python_env:latest as base
+FROM miladaleali/dev_python:latest as base
 
 WORKDIR /app/
 
