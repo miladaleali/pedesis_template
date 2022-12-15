@@ -27,4 +27,4 @@ SharpPublisherSettings = base.PublisherSettings(
     logic=sharp_logic,
 )
 
-SharpPublisherSettings.logic = sharp_logic
+# SharpPublisherSettings.logic = sharp_logic

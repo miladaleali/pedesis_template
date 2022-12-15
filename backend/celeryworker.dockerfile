@@ -2,7 +2,7 @@ FROM miladaleali/dev_python:latest as base
 
 WORKDIR /app/
 
-ENV GIT_TOKEN_PEDESIS=${GIT_TOKEN_PEDESIS}
+ENV GIT_TOKEN_PEDESIS=
 
 RUN pip install git+https://${GIT_TOKEN_PEDESIS}@github.com/miladaleali/pedesis.git
 

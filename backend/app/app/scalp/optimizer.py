@@ -1,5 +1,5 @@
 from pedesis.components import signal_optimizer as optimizer
-from scalp.optimizer_settings import (
+from app.scalp.optimizer_settings import (
     HighRiskSettings
 )
 

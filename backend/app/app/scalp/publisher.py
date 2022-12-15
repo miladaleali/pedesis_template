@@ -1,5 +1,6 @@
 from pedesis.components.signal_publisher.templates import base
-from scalp.publisher_settings import (
+
+from app.scalp.publisher_settings import (
     SharpPublisherSettings,
 )
 

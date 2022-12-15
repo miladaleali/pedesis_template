@@ -48,7 +48,7 @@ services:
         build:
             context: ./backend
             dockerfile: backend.dockerfile
-            target: prod
+            target: debug
         links:
             - redis
             - rabbitmq
@@ -58,6 +58,9 @@ services:
             - ./backend/app:/app
         ports:  
             - 5678:5678
+        dns:
+            - 8.8.8.8
+            - 8.8.4.4
         restart: on-failure
 
     celery:
@@ -86,6 +89,9 @@ services:
             target: prod
         ports:
             - 5679:5679
+        dns:
+            - 8.8.8.8
+            - 8.8.4.4
         restart: always
 
     # flower:

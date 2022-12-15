@@ -139,7 +139,7 @@ IchiSettings = base.GeneratorSettings(
 )
 
 # Just for some reason, this variable needs to be initialized again.
-IchiSettings.logic = ichi_logic
+# IchiSettings.logic = ichi_logic
 
 # ==============================  IchimokuUpTrendDT End  =======================
 # ==============================================================================
