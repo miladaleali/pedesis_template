@@ -22,7 +22,7 @@ sharp_logic = base.PublisherLogicSetting(
     take_profit_orders_portion=(20, 60, 20),
 )
 
-SharpPublisherSettings = base.PublisherSettings(
+SharpPublisherSettings = base.PublisherSettings.safe_creation(
     template_name='SharpPublisher',
     logic=sharp_logic,
 )

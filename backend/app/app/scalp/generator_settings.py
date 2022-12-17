@@ -104,7 +104,7 @@ class IchiLowerInput(base.GeneratorInputSetting):
 class IchiUpperInput(base.GeneratorInputSetting):
     request: base.OhlcvStreamDataRequest = upper_req
 
-class IchiLayeredInput(base.LayerGeneratorLogicSetting):
+class IchiLayeredInput(base.LayerGeneratorInputSetting):
     # As mentioned in the logic section, when layer settings are used, 
     # the names of the layer in the data and logic must be the same.
     template_name: str = 'IchimokuUpTrendDT'
@@ -131,11 +131,11 @@ output_settings = base.GeneratorOutputSetting(
 # ==============================  Output End =================================
 ichi_logic = IchiLayeredLogic()
 
-IchiSettings = base.GeneratorSettings(
+IchiSettings = base.GeneratorSettings.safe_creation(
     template_name='IchiUpTrendDT',
     logic=ichi_logic,
     output=output_settings,
-    input=IchiLayeredInput()
+    input_=IchiLayeredInput()
 )
 
 # Just for some reason, this variable needs to be initialized again.

@@ -11,7 +11,7 @@ logic = base.OptimizerLogicSetting(
     threshold=0.1,  # Threshold is a criterion to check the score of the signal equation, whether the signal can be propagated or not
 )
 
-HighRiskSettings = base.OptimizerSettings(
+HighRiskSettings = base.OptimizerSettings.safe_creation(
     template_name='HighRiskOptimizer',
     logic=logic,
 )

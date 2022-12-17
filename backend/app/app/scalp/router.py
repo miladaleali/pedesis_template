@@ -3,7 +3,7 @@ from pedesis.components.signal_generator.controller import Generator
 from pedesis.components.signal_optimizer.controller import Optimizer
 from pedesis.components.signal_publisher.controller import Publisher
 
-import pedesis.components.symbol_router as router
+import pedesis.components.symbol_router.controller as router
 from pedesis.components.stream_processor.models import CustomSetting  # noqa
 from pedesis.components.signal_generator.models import DataHandlerAssembly  # noqa
 from pedesis.components.symbol_router.maker import generator_assemble  # noqa
@@ -11,7 +11,7 @@ from pedesis.shortcuts import get_source  # noqa
 from . import generator as gen  # noqa
 from . import optimizer as opt  # noqa
 from . import publisher as pub  # noqa
-from . import settings
+from .settings import settings
 
 
 # define frequently use variables in this section
@@ -46,15 +46,15 @@ gen1 = generator_assemble(
 class BaseSymbol(router.SymbolRouter):
     """ this is a base class for each symbol that will be add in the engine to  """
     ENGINE_SETTINGS = settings
-    ENGINE_PROPERTY = settings.ENGINE_PROPERTY
+    ENGINE_PROPERTY = settings.engine_property
     ENGINE_RUN_CONFIGS = {
-        'mode': settings.ENGINE_RUN_MODE,
-        'start_datetime': settings.ENGINE_START_BACKTEST_DATETIME,
-        'end_datetime': settings.ENGINE_END_BACKTEST_DATETIME,
+        'mode': settings.run_mode,
+        'start_datetime': settings.backtest_start_datetime,
+        'end_datetime': settings.backtest_end_datetime,
     }
-    SRL_TIMEFRAMES = settings.SRL_TIMEFRAMES
+    SRL_TIMEFRAMES = settings.srl_timeframes
     # FIXME: srl setting is in setting file then we can use it directly, then refactor this.
-    SRL_CALCULATORS = settings.INSTALLED_SRLS  # name of calculators in srl_calculator/calculators/...
+    SRL_CALCULATORS = settings.installed_srls  # name of calculators in srl_calculator/calculators/...
     GENERATORS: List[Generator] = [  # add general generator object in this section
         gen1,
     ]
