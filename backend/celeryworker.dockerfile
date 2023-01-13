@@ -5,6 +5,7 @@ WORKDIR /app/
 ENV GIT_TOKEN_PEDESIS=
 
 RUN pip install git+https://${GIT_TOKEN_PEDESIS}@github.com/miladaleali/pedesis.git
+RUN pip install gevent
 
 COPY ./app /app
 # COPY ./pedesis/pedesis /app/pedesis/

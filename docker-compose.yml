@@ -44,69 +44,69 @@ services:
         ports:
             - "5050:80"
 
-    # backend:
-    #     image: '${DOCKER_IMAGE_BACKEND?Variable not set}'
-    #     depends_on:
-    #         - redis
-    #         - rabbitmq
-    #         - db
-    #     env_file:
-    #         - .env
-    #     environment:
-    #         - REDIS_HOST=redis
-    #         - RABBITMQ_HOST=rabbitmq
-    #         - POSTGRES_HOST=db
-    #         # - POSTGRES_USER=postgres
-    #         # - POSTGRES_PASSWORD=postgres
-    #         # - POSTGRES_DB=postgres
-    #     build:
-    #         context: ./backend
-    #         dockerfile: backend.dockerfile
-    #         target: debug
-    #     links:
-    #         - redis
-    #         - rabbitmq
-    #         - db
-    #     volumes:
-    #         # - ./backend/app/alembic/versions:/app/alembic/versions
-    #         - ./backend/app:/app
-    #     ports:  
-    #         - 5678:5678
-    #     dns:
-    #         - 8.8.8.8
-    #         - 8.8.4.4
-    #     restart: on-failure
+    backend:
+        image: '${DOCKER_IMAGE_BACKEND?Variable not set}'
+        depends_on:
+            - redis
+            - rabbitmq
+            - db
+        env_file:
+            - .env
+        environment:
+            - REDIS_HOST=redis
+            - RABBITMQ_HOST=rabbitmq
+            - POSTGRES_HOST=db
+            # - POSTGRES_USER=postgres
+            # - POSTGRES_PASSWORD=postgres
+            # - POSTGRES_DB=postgres
+        build:
+            context: ./backend
+            dockerfile: backend.dockerfile
+            target: debug
+        links:
+            - redis
+            - rabbitmq
+            - db
+        volumes:
+            # - ./backend/app/alembic/versions:/app/alembic/versions
+            - ./backend/app:/app
+        ports:  
+            - 5678:5678
+        dns:
+            - 8.8.8.8
+            - 8.8.4.4
+        restart: on-failure
 
-    # celery:
-    #     image: '${DOCKER_IMAGE_CELERYWORKER?Variable not set}'
-    #     depends_on:
-    #         - redis
-    #         - rabbitmq
-    #         - db
-    #     links:
-    #         - redis
-    #         - rabbitmq
-    #         - db
-    #     env_file:
-    #         - .env
-    #     environment:
-    #         - REDIS_HOST=redis
-    #         - RABBITMQ_HOST=rabbitmq
-    #         - POSTGRES_HOST=db
-    #         # - POSTGRES_USER=postgres
-    #         # - POSTGRES_PASSWORD=postgres
-    #         # - POSTGRES_DB=postgres
-    #         - C_FORCE_ROOT=true
-    #     build:
-    #         context: ./backend
-    #         dockerfile: celeryworker.dockerfile
-    #         target: prod
-    #     ports:
-    #         - 5679:5679
-    #     dns:
-    #         - 8.8.8.8
-    #         - 8.8.4.4
-    #     restart: always
+    celery:
+        image: '${DOCKER_IMAGE_CELERYWORKER?Variable not set}'
+        depends_on:
+            - redis
+            - rabbitmq
+            - db
+        links:
+            - redis
+            - rabbitmq
+            - db
+        env_file:
+            - .env
+        environment:
+            - REDIS_HOST=redis
+            - RABBITMQ_HOST=rabbitmq
+            - POSTGRES_HOST=db
+            # - POSTGRES_USER=postgres
+            # - POSTGRES_PASSWORD=postgres
+            # - POSTGRES_DB=postgres
+            - C_FORCE_ROOT=true
+        build:
+            context: ./backend
+            dockerfile: celeryworker.dockerfile
+            target: prod
+        ports:
+            - 5679:5679
+        dns:
+            - 8.8.8.8
+            - 8.8.4.4
+        restart: always
 
     # flower:
     #     image: mher/flower
@@ -115,4 +115,4 @@ services:
 
 volumes:
     data:
-#       driver: local
+      driver: local
