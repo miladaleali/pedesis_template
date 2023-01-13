@@ -38,10 +38,7 @@ upper_handler = DataHandlerAssembly(
 #     data_handler=[lower_handler],
 # )
 
-gen1 = generator_assemble(
-    raw_generator=gen.IchimokuUpTrendDT,
-    data_handler=[lower_handler, upper_handler]
-)
+gen1 = gen.IchimokuUpTrendDT(data_handler=[lower_handler, upper_handler])
 
 class BaseSymbol(router.SymbolRouter):
     """ this is a base class for each symbol that will be add in the engine to  """

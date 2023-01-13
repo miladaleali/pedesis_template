@@ -14,8 +14,8 @@ class IchimokuUpTrendDT(Generator):
     TIMEFRAME: str = '5m'
     SETTINGS = gsettings.IchiSettings
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, data_handler=None):
+        super().__init__(data_handler)
 
         # Next, we will define the indicators and use the same naming as we did in the settings here.
         # Here we only initiate the indicators, they are automatically set values at runtime.
